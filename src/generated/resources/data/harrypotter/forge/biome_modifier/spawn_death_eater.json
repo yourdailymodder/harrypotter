@@ -1,0 +1,10 @@
+{
+  "type": "harrypotter:harry_potter_spawns",
+  "biomes": "#harrypotter:has_death_eater",
+  "spawn": {
+    "type": "harrypotter:death_eater",
+    "maxCount": 2,
+    "minCount": 0,
+    "weight": 5
+  }
+}

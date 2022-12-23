@@ -1,0 +1,14 @@
+{
+  "structures": [
+	  {
+	  	"structure": "harrypotter:hidden_basement",
+	  	"weight":3
+	  }
+  ],
+  "placement":{
+  	"salt":1594767902,
+  	"spacing":35,
+  	"separation":25,
+  	"type":"minecraft:random_spread"
+  }
+}

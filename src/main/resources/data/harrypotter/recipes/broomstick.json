@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  x",
+    " y ",
+	"z  "
+  ],
+  "key": {
+    "z": {
+      "item": "minecraft:stick"
+    },
+    "y": {
+      "item": "minecraft:iron_ingot"
+    },
+	"x": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "result": {
+    "item": "harrypotter:broomstick"
+  }
+}

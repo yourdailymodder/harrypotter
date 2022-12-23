@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#x#",
+	"###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+	"x": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "harrypotter:marauders_map"
+  }
+}

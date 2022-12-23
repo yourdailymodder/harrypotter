@@ -1,0 +1,14 @@
+{
+  "structures": [
+	  {
+	  	"structure": "harrypotter:labyrinth",
+	  	"weight":1
+	  }
+  ],
+  "placement":{
+  	"salt":1594767901,
+  	"spacing":80,
+  	"separation":50,
+  	"type":"minecraft:random_spread"
+  }
+}

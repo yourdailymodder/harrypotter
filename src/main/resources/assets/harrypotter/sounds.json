@@ -1,0 +1,71 @@
+{
+  "spell.harrypotter.default": {
+    "sounds": [
+     "harrypotter:spell1",
+     "harrypotter:spell2"
+    ]
+  },
+  "spell.harrypotter.sheal": {
+    "sounds": [
+     "harrypotter:heal2"
+    ]
+  },
+  "spell.harrypotter.mheal": {
+    "sounds": [
+     "harrypotter:heal4"
+    ]
+  },
+  "spell.harrypotter.smoke": {
+    "sounds": [
+     "harrypotter:smoke"
+    ]
+  },
+  "spell.harrypotter.ice": {
+    "sounds": [
+     "harrypotter:ice",
+     "harrypotter:ice2"
+    ]
+  },
+  "spell.harrypotter.magic3": {
+    "sounds": [
+     "harrypotter:magic3"
+    ]
+  },
+  "spell.harrypotter.magic6": {
+    "sounds": [
+     "harrypotter:magic6"
+    ]
+  },
+  "spell.harrypotter.magic7": {
+    "sounds": [
+     "harrypotter:magic7"
+    ]
+  },
+  "spell.harrypotter.fireball": {
+    "sounds": [
+     "harrypotter:fireball1",
+     "harrypotter:fireball2"
+    ]
+  },
+  "spell.harrypotter.sparks": {
+    "sounds": [
+     "harrypotter:electric_spell1",
+     "harrypotter:electric_spell2"
+    ]
+  },
+  "spell.harrypotter.explosion": {
+    "sounds": [
+     "harrypotter:explosion_spell1"
+    ]
+  },
+  "spell.harrypotter.explosion2": {
+    "sounds": [
+     "harrypotter:explosion2"
+    ]
+  },
+  "spell.harrypotter.spell3": {
+    "sounds": [
+     "harrypotter:spell3"
+    ]
+  }
+}

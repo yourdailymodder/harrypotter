@@ -1,0 +1,10 @@
+{
+  "type": "harrypotter:harry_potter_spawns",
+  "biomes": "#harrypotter:has_acromantula",
+  "spawn": {
+    "type": "harrypotter:acromantula",
+    "maxCount": 3,
+    "minCount": 1,
+    "weight": 10
+  }
+}

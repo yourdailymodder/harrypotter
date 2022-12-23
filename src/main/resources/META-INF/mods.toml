@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[41,)"
+license="All rights reserved"
+
+[[mods]]
+modId="harrypotter"
+version="2.0.1"
+displayName="YDM's Harry Potter"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/ydms-wizarding-world-of-harry-potter"
+credits="minecraftserverzone.com, "
+authors="YourDailyModder"
+description='''
+This mod adds:
+-25 spells
+-4 enemies
+-3 new structures (not from harry potter) 
+-broomstick
+-simple level up system for the spells
+
+More info at the curseforge page.
+
+Thanks for downloading this mod!
+'''
+
+[[dependencies.harrypotter]]
+    modId="forge" 
+    mandatory=true 
+    versionRange="[41,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.harrypotter]]
+    modId="minecraft"
+    mandatory=true
+	versionRange="[1.19,1.20)"
+    ordering="NONE"
+    side="BOTH"
