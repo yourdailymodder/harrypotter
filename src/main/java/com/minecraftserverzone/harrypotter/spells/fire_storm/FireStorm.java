@@ -1,11 +1,10 @@
 package com.minecraftserverzone.harrypotter.spells.fire_storm;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.broomsticks.BroomStick;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.setup.capabilities.PlayerStatsProvider;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -270,12 +269,12 @@ public class FireStorm extends Projectile {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
 	protected ParticleOptions getTrailParticle() {
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0xf55d42).toVector3f();
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0xf55d42));
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

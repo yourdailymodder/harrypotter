@@ -8,7 +8,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.effect.MobEffect;
@@ -56,7 +55,7 @@ public class Troll extends Monster {
 	   }
    
    @Override
-   public boolean shouldDropExperience() {
+	protected boolean shouldDropExperience() {
 		return true;
 	}
 
@@ -100,6 +99,13 @@ public class Troll extends Monster {
           --this.attackAnimationTick;
        }
    }
+
+   
+   @Override
+	protected void populateDefaultEquipmentSlots(DifficultyInstance p_21383_) {
+		super.populateDefaultEquipmentSlots(p_21383_);
+		
+	}
    
    @Override
    public void aiStep() {
@@ -214,7 +220,7 @@ public class Troll extends Monster {
    public static class TwohandEffectsGroupData implements SpawnGroupData {
       public MobEffect effect;
 
-      public void setRandomEffect(RandomSource p_33830_) {
+      public void setRandomEffect(Random p_33830_) {
          int i = p_33830_.nextInt(5);
          if (i <= 1) {
             this.effect = MobEffects.MOVEMENT_SPEED;

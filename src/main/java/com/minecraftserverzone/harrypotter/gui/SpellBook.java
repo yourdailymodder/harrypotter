@@ -1,7 +1,5 @@
 package com.minecraftserverzone.harrypotter.gui;
 
-import org.joml.Matrix4f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.gui.buttons.Button;
 import com.minecraftserverzone.harrypotter.setup.KeyHandler;
@@ -14,6 +12,7 @@ import com.minecraftserverzone.harrypotter.setup.network.PacketData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.math.Matrix4f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -22,7 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.locale.Language;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +36,7 @@ public class SpellBook extends Screen{
 	
 	
 	public SpellBook() {
-		super(Component.translatable("screen.harrypotter.spellbook"));
+		super(new TranslatableComponent("screen.harrypotter.spellbook"));
 	}
 	
 	@SuppressWarnings("resource")
@@ -61,7 +60,7 @@ public class SpellBook extends Screen{
 	    		x-=1;
 	    		y-=4;
 	    	}
-	    	increaseButton[num] = this.addRenderableWidget(new Button(i - 65 - (x * 117), j - 68 + (y * 36), 10, 10, Component.translatable("screen.harrypotter.plus"), (p_86679_) -> {
+	    	increaseButton[num] = this.addRenderableWidget(new Button(i - 65 - (x * 117), j - 68 + (y * 36), 10, 10, new TranslatableComponent("screen.harrypotter.plus"), (p_86679_) -> {
 	        	levelup(numx);
 	        }, spellLevel[num] <= player.experienceLevel ? true : false));
 			
@@ -125,7 +124,7 @@ public class SpellBook extends Screen{
 		         
 		         float exp = minecraft.player.experienceLevel;
 		         RenderSystem.setShaderTexture(0, EXP);
-		         drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.expleft").getString() + " " + String.valueOf((int)exp), (int) ((screenWidth/2)+ 8), ((screenHeight/2)- 65), Integer.parseInt("b8aa8a", 16));
+		         drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.expleft").getString() + " " + String.valueOf((int)exp), (int) ((screenWidth/2)+ 8), ((screenHeight/2)- 65), Integer.parseInt("b8aa8a", 16));
 
 		         int xx = 0;
 		         int yy = 0;
@@ -138,14 +137,14 @@ public class SpellBook extends Screen{
 		 	    		yy = 0;
 		 	    	}
 //		 	    	System.out.println(xx*117);
-		        	 drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.lvl").getString() +" "+String.valueOf(spellLevel[i]), (int) ((screenWidth/2) - 107) + (xx*117), ((screenHeight/2) - 36 +(36*yy)), Integer.parseInt("b8aa8a", 16));
+		        	 drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.lvl").getString() +" "+String.valueOf(spellLevel[i]), (int) ((screenWidth/2) - 107) + (xx*117), ((screenHeight/2) - 36 +(36*yy)), Integer.parseInt("b8aa8a", 16));
 		         }
 
 
 		         RenderSystem.setShaderTexture(0, SPELL_BOOK);
 			   	 
 //title color: b8aa8a //text color: 857759
-			   	drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.spellbook").getString(), (int) ((screenWidth/2)- 55) -fontrenderer.width(Component.translatable("screen.harrypotter.spellbook").getString()) /2, ((screenHeight/2)- 65), Integer.parseInt("b8aa8a", 16));
+			   	drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.spellbook").getString(), (int) ((screenWidth/2)- 55) -fontrenderer.width(new TranslatableComponent("screen.harrypotter.spellbook").getString()) /2, ((screenHeight/2)- 65), Integer.parseInt("b8aa8a", 16));
 
 //skills 1 - 20
 			   	//draw itemframe
@@ -153,41 +152,41 @@ public class SpellBook extends Screen{
 		         int m = 91;
 		         
 		         if(page==0) {
-			         drawSkillInBook(0, i - m - 20, screenHeight/2 - 55, Component.translatable("screen.harrypotter.accio").getString(), Component.translatable("screen.harrypotter.accio.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(1, i - m - 20, screenHeight/2 - 19, Component.translatable("screen.harrypotter.aqua_eructo").getString(), Component.translatable("screen.harrypotter.aqua_eructo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(2, i - m - 20, screenHeight/2 + 17, Component.translatable("screen.harrypotter.ascendo").getString(), Component.translatable("screen.harrypotter.ascendo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(3, i - m - 20, screenHeight/2 + 53, Component.translatable("screen.harrypotter.avada_kedavra").getString(), Component.translatable("screen.harrypotter.avada_kedavra.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(0, i - m - 20, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.accio").getString(), new TranslatableComponent("screen.harrypotter.accio.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(1, i - m - 20, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.aqua_eructo").getString(), new TranslatableComponent("screen.harrypotter.aqua_eructo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(2, i - m - 20, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.ascendo").getString(), new TranslatableComponent("screen.harrypotter.ascendo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(3, i - m - 20, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.avada_kedavra").getString(), new TranslatableComponent("screen.harrypotter.avada_kedavra.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 
-			         drawSkillInBook(4, i - m + 97, screenHeight/2 - 55, Component.translatable("screen.harrypotter.avis").getString(), Component.translatable("screen.harrypotter.avis.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(5, i - m + 97, screenHeight/2 - 19, Component.translatable("screen.harrypotter.confringo").getString(), Component.translatable("screen.harrypotter.confringo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(6, i - m + 97, screenHeight/2 + 17, Component.translatable("screen.harrypotter.depulso").getString(), Component.translatable("screen.harrypotter.depulso.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(7, i - m + 97, screenHeight/2 + 53, Component.translatable("screen.harrypotter.expecto_patronum").getString(), Component.translatable("screen.harrypotter.expecto_patronum.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(4, i - m + 97, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.avis").getString(), new TranslatableComponent("screen.harrypotter.avis.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(5, i - m + 97, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.confringo").getString(), new TranslatableComponent("screen.harrypotter.confringo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(6, i - m + 97, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.depulso").getString(), new TranslatableComponent("screen.harrypotter.depulso.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(7, i - m + 97, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.expecto_patronum").getString(), new TranslatableComponent("screen.harrypotter.expecto_patronum.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 
 			     //page 2
 		         }else if(page==1) {
-			         drawSkillInBook(8, i - m - 20, screenHeight/2 - 55, Component.translatable("screen.harrypotter.expelliarmus").getString(), Component.translatable("screen.harrypotter.expelliarmus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(9, i - m - 20, screenHeight/2 - 19, Component.translatable("screen.harrypotter.fumos").getString(), Component.translatable("screen.harrypotter.fumos.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(10, i - m - 20, screenHeight/2 + 17, Component.translatable("screen.harrypotter.glacius").getString(), Component.translatable("screen.harrypotter.glacius.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(11, i - m - 20, screenHeight/2 + 53, Component.translatable("screen.harrypotter.herbivicus").getString(), Component.translatable("screen.harrypotter.herbivicus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(8, i - m - 20, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.expelliarmus").getString(), new TranslatableComponent("screen.harrypotter.expelliarmus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(9, i - m - 20, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.fumos").getString(), new TranslatableComponent("screen.harrypotter.fumos.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(10, i - m - 20, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.glacius").getString(), new TranslatableComponent("screen.harrypotter.glacius.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(11, i - m - 20, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.herbivicus").getString(), new TranslatableComponent("screen.harrypotter.herbivicus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 
-			         drawSkillInBook(12, i - m + 97, screenHeight/2 - 55, Component.translatable("screen.harrypotter.incendio").getString(), Component.translatable("screen.harrypotter.incendio.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(13, i - m + 97, screenHeight/2 - 19, Component.translatable("screen.harrypotter.lumos").getString(), Component.translatable("screen.harrypotter.lumos.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(14, i - m + 97, screenHeight/2 + 17, Component.translatable("screen.harrypotter.melofors").getString(), Component.translatable("screen.harrypotter.melofors.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(15, i - m + 97, screenHeight/2 + 53, Component.translatable("screen.harrypotter.mobilicorpus").getString(), Component.translatable("screen.harrypotter.mobilicorpus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(12, i - m + 97, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.incendio").getString(), new TranslatableComponent("screen.harrypotter.incendio.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(13, i - m + 97, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.lumos").getString(), new TranslatableComponent("screen.harrypotter.lumos.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(14, i - m + 97, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.melofors").getString(), new TranslatableComponent("screen.harrypotter.melofors.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(15, i - m + 97, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.mobilicorpus").getString(), new TranslatableComponent("screen.harrypotter.mobilicorpus.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 
 		         //page 3
 				}else if(page==2) {
-			         drawSkillInBook(16, i - m - 20, screenHeight/2 - 55, Component.translatable("screen.harrypotter.reparo").getString(), Component.translatable("screen.harrypotter.reparo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(17, i - m - 20, screenHeight/2 - 19, Component.translatable("screen.harrypotter.sectumsempra").getString(), Component.translatable("screen.harrypotter.sectumsempra.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(18, i - m - 20, screenHeight/2 + 17, Component.translatable("screen.harrypotter.vulnera_sanentur").getString(), Component.translatable("screen.harrypotter.vulnera_sanentur.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(19, i - m - 20, screenHeight/2 + 53, Component.translatable("screen.harrypotter.wingardium_leviosa").getString(), Component.translatable("screen.harrypotter.wingardium_leviosa.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(16, i - m - 20, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.reparo").getString(), new TranslatableComponent("screen.harrypotter.reparo.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(17, i - m - 20, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.sectumsempra").getString(), new TranslatableComponent("screen.harrypotter.sectumsempra.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(18, i - m - 20, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.vulnera_sanentur").getString(), new TranslatableComponent("screen.harrypotter.vulnera_sanentur.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(19, i - m - 20, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.wingardium_leviosa").getString(), new TranslatableComponent("screen.harrypotter.wingardium_leviosa.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 
-			         drawSkillInBook(20, i - m + 97, screenHeight/2 - 55, Component.translatable("screen.harrypotter.episkey").getString(), Component.translatable("screen.harrypotter.episkey.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(21, i - m + 97, screenHeight/2 - 19, Component.translatable("screen.harrypotter.alarte_ascandare").getString(), Component.translatable("screen.harrypotter.alarte_ascandare.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(22, i - m + 97, screenHeight/2 + 17, Component.translatable("screen.harrypotter.finite").getString(), Component.translatable("screen.harrypotter.finite.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
-			         drawSkillInBook(23, i - m + 97, screenHeight/2 + 53, Component.translatable("screen.harrypotter.evanesco").getString(), Component.translatable("screen.harrypotter.evanesco.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(20, i - m + 97, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.episkey").getString(), new TranslatableComponent("screen.harrypotter.episkey.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(21, i - m + 97, screenHeight/2 - 19, new TranslatableComponent("screen.harrypotter.alarte_ascandare").getString(), new TranslatableComponent("screen.harrypotter.alarte_ascandare.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(22, i - m + 97, screenHeight/2 + 17, new TranslatableComponent("screen.harrypotter.finite").getString(), new TranslatableComponent("screen.harrypotter.finite.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+			         drawSkillInBook(23, i - m + 97, screenHeight/2 + 53, new TranslatableComponent("screen.harrypotter.evanesco").getString(), new TranslatableComponent("screen.harrypotter.evanesco.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 				}else if(page==3) {
-					 drawSkillInBook(24, i - m - 20, screenHeight/2 - 55, Component.translatable("screen.harrypotter.fire_storm").getString(), Component.translatable("screen.harrypotter.fire_storm.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
+					 drawSkillInBook(24, i - m - 20, screenHeight/2 - 55, new TranslatableComponent("screen.harrypotter.fire_storm").getString(), new TranslatableComponent("screen.harrypotter.fire_storm.description").getString(),fontrenderer, p_96562_, mouseX, mouseY);
 			         
 		        }
         		 /** TODO szoveg tores*/
@@ -417,7 +416,7 @@ public class SpellBook extends Screen{
 											
 									drawString(p_96562_, fontrenderer, SkillName, mouseX + 15, mouseY - 15 - (skillInfoNum * 10), Integer.parseInt("ffffff", 16));
 
-									drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.lvl").getString()+" "+spellLevel[ix], mouseX + 15, (mouseY - 3) + ((0) * 10) - (skillInfoNum * 10), Integer.parseInt("a8a8a8", 16));
+									drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.lvl").getString()+" "+spellLevel[ix], mouseX + 15, (mouseY - 3) + ((0) * 10) - (skillInfoNum * 10), Integer.parseInt("a8a8a8", 16));
 									
 									if(SkillInfo2!=null) {
 										drawString(p_96562_, fontrenderer, SkillInfo2, mouseX + 15, (mouseY - 3) + ((1) * 10) - (skillInfoNum * 10), Integer.parseInt("5858f6", 16));
@@ -429,11 +428,11 @@ public class SpellBook extends Screen{
 										drawString(p_96562_, fontrenderer, SkillInfo4, mouseX + 15, (mouseY - 3) + ((3) * 10) - (skillInfoNum * 10), Integer.parseInt("5858f6", 16));
 									}
 									
-//									drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.cooldown").getString() + cooldown, mouseX + 15, (mouseY - 3) + ((2) * 10) - (descLength * 10), Integer.parseInt("5858f6", 16));
+//									drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.cooldown").getString() + cooldown, mouseX + 15, (mouseY - 3) + ((2) * 10) - (descLength * 10), Integer.parseInt("5858f6", 16));
 									
 									//level up text
 									if(canLevelUp && (isMouseOverArea(mouseX, mouseY,(screenWidth / 2) - 110 + (117 * xx) + 45, (screenHeight / 2) - 36 + (36 * yy), 10, 10))) {
-										drawString(p_96562_, fontrenderer, Component.translatable("screen.harrypotter.side_arrow").getString() + (spellLevel[ix]+1), mouseX + 15 + fontrenderer.width(Component.translatable("screen.harrypotter.lvl").getString()+" "+spellLevel[ix]), (mouseY - 3) + ((0) * 10) - (skillInfoNum * 10), Integer.parseInt("00aa00", 16));
+										drawString(p_96562_, fontrenderer, new TranslatableComponent("screen.harrypotter.side_arrow").getString() + (spellLevel[ix]+1), mouseX + 15 + fontrenderer.width(new TranslatableComponent("screen.harrypotter.lvl").getString()+" "+spellLevel[ix]), (mouseY - 3) + ((0) * 10) - (skillInfoNum * 10), Integer.parseInt("00aa00", 16));
 										drawString(p_96562_, fontrenderer, SkillInfo2plus, mouseX + 15 + fontrenderer.width(SkillInfo2), (mouseY - 3) + ((1) * 10) - (skillInfoNum * 10), Integer.parseInt("00aa00", 16));
 										drawString(p_96562_, fontrenderer, SkillInfo3plus, mouseX + 15 + fontrenderer.width(SkillInfo3), (mouseY - 3) + ((2) * 10) - (skillInfoNum * 10), Integer.parseInt("00aa00", 16));
 										drawString(p_96562_, fontrenderer, SkillInfo4plus, mouseX + 15 + fontrenderer.width(SkillInfo4), (mouseY - 3) + ((3) * 10) - (skillInfoNum * 10), Integer.parseInt("00aa00", 16));
@@ -459,11 +458,11 @@ public class SpellBook extends Screen{
 		String info = "";
 			if(number==1) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.accio").getString();
+					info = new TranslatableComponent("screen.harrypotter.accio").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1); // +" sec"
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1); // +" sec"
 					}else {
 //						info += " sec";
 					}
@@ -475,16 +474,16 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 2) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.aqua_eructo").getString();
+					info = new TranslatableComponent("screen.harrypotter.aqua_eructo").getString();
 				}else if(nameOrDescription == 2) {
 					if(!canLevelUp) {
-						info = Component.translatable("screen.harrypotter.chance_to_spawn").getString();
+						info = new TranslatableComponent("screen.harrypotter.chance_to_spawn").getString();
 					}
 				}else if(nameOrDescription == 3) {
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.min(1f + ((level - 1) / 2f), 100) + Component.translatable("screen.harrypotter.percent").getString();
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.min(1f + ((level - 1) / 2f), 100) + new TranslatableComponent("screen.harrypotter.percent").getString();
 					}else {
-						info = Component.translatable("screen.harrypotter.water").getString() + Math.min(1f + ((level) / 2f), 100) + Component.translatable("screen.harrypotter.percent").getString();
+						info = new TranslatableComponent("screen.harrypotter.water").getString() + Math.min(1f + ((level) / 2f), 100) + new TranslatableComponent("screen.harrypotter.percent").getString();
 					}
 				}else if(nameOrDescription == 4) {
 					info = "";
@@ -492,11 +491,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 3) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.ascendo").getString();
+					info = new TranslatableComponent("screen.harrypotter.ascendo").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -508,11 +507,11 @@ public class SpellBook extends Screen{
 
 			}else if(number == 4) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.avada_kedavra").getString();
+					info = new TranslatableComponent("screen.harrypotter.avada_kedavra").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(60f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(60f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(60f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(60f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -524,16 +523,16 @@ public class SpellBook extends Screen{
 
 			}else if(number == 5) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.avis").getString();
+					info = new TranslatableComponent("screen.harrypotter.avis").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.dot").getString() + Math.max(7f + ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.dot").getString() + Math.max(7f + ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(7f + ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(7f + ((level) / 2f), 1);
 					}
 				}else if(nameOrDescription == 3) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -543,16 +542,16 @@ public class SpellBook extends Screen{
 
 			}else if(number == 6) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.confringo").getString();
+					info = new TranslatableComponent("screen.harrypotter.confringo").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.aoe_damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.aoe_damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
 					}
 				}else if(nameOrDescription == 3) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(15f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(15f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -562,11 +561,11 @@ public class SpellBook extends Screen{
 
 			}else if(number == 7) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.depulso").getString();
+					info = new TranslatableComponent("screen.harrypotter.depulso").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -578,11 +577,11 @@ public class SpellBook extends Screen{
 
 			}else if(number == 8) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.expecto_patronum").getString();
+					info = new TranslatableComponent("screen.harrypotter.expecto_patronum").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(15f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(15f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -594,11 +593,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 9) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.expelliarmus").getString();
+					info = new TranslatableComponent("screen.harrypotter.expelliarmus").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -610,11 +609,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 10) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.fumos").getString();
+					info = new TranslatableComponent("screen.harrypotter.fumos").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -626,32 +625,32 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 11) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.glacius").getString();
+					info = new TranslatableComponent("screen.harrypotter.glacius").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
 					}
 				}else if(nameOrDescription == 3) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
 				}else if(nameOrDescription == 4) {
 					if(!canLevelUp) {
-						info = Component.translatable("screen.harrypotter.frozen").getString();
+						info = new TranslatableComponent("screen.harrypotter.frozen").getString();
 					}
 				}
 
 			}else if(number == 12) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.herbivicus").getString();
+					info = new TranslatableComponent("screen.harrypotter.herbivicus").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -663,32 +662,32 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 13) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.incendio").getString();
+					info = new TranslatableComponent("screen.harrypotter.incendio").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.damage").getString() + Math.max(5f + ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.damage").getString() + Math.max(5f + ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(5f + ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(5f + ((level) / 2f), 1);
 					}
 				}else if(nameOrDescription == 3) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
 				}else if(nameOrDescription == 4) {
 					if(!canLevelUp) {
-						info = Component.translatable("screen.harrypotter.burn").getString();
+						info = new TranslatableComponent("screen.harrypotter.burn").getString();
 					}
 				}
 				
 			}else if(number == 14) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.lumos").getString();
+					info = new TranslatableComponent("screen.harrypotter.lumos").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(5f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(5f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(5f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(5f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -700,11 +699,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 15) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.melofors").getString();
+					info = new TranslatableComponent("screen.harrypotter.melofors").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -716,11 +715,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 16) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.mobilicorpus").getString();
+					info = new TranslatableComponent("screen.harrypotter.mobilicorpus").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -732,11 +731,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 17) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.reparo").getString();
+					info = new TranslatableComponent("screen.harrypotter.reparo").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -748,16 +747,16 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 18) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.sectumsempra").getString();
+					info = new TranslatableComponent("screen.harrypotter.sectumsempra").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.damage").getString() + Math.max(15f + ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.damage").getString() + Math.max(15f + ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(15f + ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(15f + ((level) / 2f), 1);
 					}
 				}else if(nameOrDescription == 3) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -767,11 +766,11 @@ public class SpellBook extends Screen{
 
 			}else if(number == 19) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.vulnera_sanentur").getString();
+					info = new TranslatableComponent("screen.harrypotter.vulnera_sanentur").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -783,11 +782,11 @@ public class SpellBook extends Screen{
 				
 			}else if(number == 20) {
 				if(nameOrDescription == 1) {
-					info = Component.translatable("screen.harrypotter.wingardium_leviosa").getString();
+					info = new TranslatableComponent("screen.harrypotter.wingardium_leviosa").getString();
 				}else if(nameOrDescription == 2) {
-					info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 					if(canLevelUp) {
-						info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+						info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 					}else {
 //						info += " sec";
 					}
@@ -798,11 +797,11 @@ public class SpellBook extends Screen{
 				}
 		}else if(number == 21) {
 			if(nameOrDescription == 1) {
-				info = Component.translatable("screen.harrypotter.episkey").getString();
+				info = new TranslatableComponent("screen.harrypotter.episkey").getString();
 			}else if(nameOrDescription == 2) {
-				info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(15f - (level / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(15f - (level / 2f), 1);
 				}else {
 				}
 			}else if(nameOrDescription == 3) {
@@ -812,11 +811,11 @@ public class SpellBook extends Screen{
 			}
 		}else if(number == 22) {
 			if(nameOrDescription == 1) {
-				info = Component.translatable("screen.harrypotter.alarte_ascandare").getString();
+				info = new TranslatableComponent("screen.harrypotter.alarte_ascandare").getString();
 			}else if(nameOrDescription == 2) {
-				info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(10f - ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(10f - (level / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(10f - (level / 2f), 1);
 				}else {
 				}
 			}else if(nameOrDescription == 3) {
@@ -826,11 +825,11 @@ public class SpellBook extends Screen{
 			}
 		}else if(number == 23) {
 			if(nameOrDescription == 1) {
-				info = Component.translatable("screen.harrypotter.finite").getString();
+				info = new TranslatableComponent("screen.harrypotter.finite").getString();
 			}else if(nameOrDescription == 2) {
-				info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(15f - ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(15f - (level / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(15f - (level / 2f), 1);
 				}else {
 				}
 			}else if(nameOrDescription == 3) {
@@ -840,11 +839,11 @@ public class SpellBook extends Screen{
 			}
 		}else if(number == 24) {
 			if(nameOrDescription == 1) {
-				info = Component.translatable("screen.harrypotter.evanesco").getString();
+				info = new TranslatableComponent("screen.harrypotter.evanesco").getString();
 			}else if(nameOrDescription == 2) {
-				info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(60f - ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(60f - ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(60f - (level / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(60f - (level / 2f), 1);
 				}else {
 				}
 			}else if(nameOrDescription == 3) {
@@ -854,16 +853,16 @@ public class SpellBook extends Screen{
 			}
 		}else if(number == 25) {
 			if(nameOrDescription == 1) {
-				info = Component.translatable("screen.harrypotter.fire_storm").getString();
+				info = new TranslatableComponent("screen.harrypotter.fire_storm").getString();
 			}else if(nameOrDescription == 2) {
-				info = Component.translatable("screen.harrypotter.damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.damage").getString() + Math.max(4f + ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(4f + ((level) / 2f), 1);
 				}
 			}else if(nameOrDescription == 3) {
-				info = Component.translatable("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
+				info = new TranslatableComponent("screen.harrypotter.cooldown").getString() + Math.max(30f - ((level - 1) / 2f), 1);
 				if(canLevelUp) {
-					info = Component.translatable("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
+					info = new TranslatableComponent("screen.harrypotter.side_arrow").getString() + Math.max(30f - ((level) / 2f), 1);
 				}else {
 //					info += " sec";
 				}
@@ -881,55 +880,55 @@ public class SpellBook extends Screen{
 		if(nameOrDescription == 1) {
 		}else {
 			if(number==1) {
-				info = Component.translatable("screen.harrypotter.accio.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.accio.description").getString();
 			}else if(number == 2) {
-				info = Component.translatable("screen.harrypotter.aqua_eructo.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.aqua_eructo.description").getString();
 			}else if(number == 3) {
-				info = Component.translatable("screen.harrypotter.ascendo.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.ascendo.description").getString();
 			}else if(number == 4) {
-				info = Component.translatable("screen.harrypotter.avada_kedavra.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.avada_kedavra.description").getString();
 			}else if(number == 5) {
-				info = Component.translatable("screen.harrypotter.avis.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.avis.description").getString();
 			}else if(number == 6) {
-				info = Component.translatable("screen.harrypotter.confringo.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.confringo.description").getString();
 			}else if(number == 7) {
-				info = Component.translatable("screen.harrypotter.depulso.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.depulso.description").getString();
 			}else if(number == 8) {
-				info = Component.translatable("screen.harrypotter.expecto_patronum.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.expecto_patronum.description").getString();
 			}else if(number == 9) {
-				info = Component.translatable("screen.harrypotter.expelliarmus.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.expelliarmus.description").getString();
 			}else if(number == 10) {
-				info = Component.translatable("screen.harrypotter.fumos.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.fumos.description").getString();
 			}else if(number == 11) {
-				info = Component.translatable("screen.harrypotter.glacius.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.glacius.description").getString();
 			}else if(number == 12) {
-				info = Component.translatable("screen.harrypotter.herbivicus.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.herbivicus.description").getString();
 			}else if(number == 13) {
-				info = Component.translatable("screen.harrypotter.incendio.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.incendio.description").getString();
 			}else if(number == 14) {
-				info = Component.translatable("screen.harrypotter.lumos.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.lumos.description").getString();
 			}else if(number == 15) {
-				info = Component.translatable("screen.harrypotter.melofors.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.melofors.description").getString();
 			}else if(number == 16) {
-				info = Component.translatable("screen.harrypotter.mobilicorpus.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.mobilicorpus.description").getString();
 			}else if(number == 17) {
-				info = Component.translatable("screen.harrypotter.reparo.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.reparo.description").getString();
 			}else if(number == 18) {
-				info = Component.translatable("screen.harrypotter.sectumsempra.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.sectumsempra.description").getString();
 			}else if(number == 19) {
-				info = Component.translatable("screen.harrypotter.vulnera_sanentur.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.vulnera_sanentur.description").getString();
 			}else if(number == 20) {
-				info = Component.translatable("screen.harrypotter.wingardium_leviosa.description").getString();	
+				info = new TranslatableComponent("screen.harrypotter.wingardium_leviosa.description").getString();	
 			}else if(number == 21) {
-				info = Component.translatable("screen.harrypotter.episkey.description").getString();
+				info = new TranslatableComponent("screen.harrypotter.episkey.description").getString();
 			}else if(number == 22) {
-				info = Component.translatable("screen.harrypotter.alarte_ascandare.description").getString();	
+				info = new TranslatableComponent("screen.harrypotter.alarte_ascandare.description").getString();	
 			}else if(number == 23) {
-				info = Component.translatable("screen.harrypotter.finite.description").getString();	
+				info = new TranslatableComponent("screen.harrypotter.finite.description").getString();	
 			}else if(number == 24) {
-				info = Component.translatable("screen.harrypotter.evanesco.description").getString();	
+				info = new TranslatableComponent("screen.harrypotter.evanesco.description").getString();	
 			}else if(number == 25) {
-				info = Component.translatable("screen.harrypotter.fire_storm.description").getString();	
+				info = new TranslatableComponent("screen.harrypotter.fire_storm.description").getString();	
 			}
 			
 		}

@@ -63,7 +63,7 @@ public class WingardiumLeviosa extends PullSpell {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 

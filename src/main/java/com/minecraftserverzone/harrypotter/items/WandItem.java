@@ -1,8 +1,12 @@
 package com.minecraftserverzone.harrypotter.items;
 
+import java.util.Random;
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.minecraftserverzone.harrypotter.items.wand.ApprenticeWandRenderer;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.setup.capabilities.PlayerStatsProvider;
 import com.minecraftserverzone.harrypotter.setup.config.HarryPotterModConfig;
@@ -10,15 +14,16 @@ import com.minecraftserverzone.harrypotter.setup.network.Networking;
 import com.minecraftserverzone.harrypotter.setup.network.PacketHerbivicus;
 import com.minecraftserverzone.harrypotter.setup.network.PacketSpells;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -36,7 +41,9 @@ import net.minecraft.world.level.block.BaseCoralWallFanBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.NonNullLazy;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 
@@ -353,7 +360,7 @@ public class WandItem extends Item{
 		         if (!(p_40633_ instanceof ServerLevel)) {
 		            return true;
 		         } else {
-		            RandomSource random = p_40633_.getRandom();
+		            Random random = p_40633_.getRandom();
 
 		            label78:
 		            for(int i = 0; i < 128; ++i) {
@@ -370,7 +377,7 @@ public class WandItem extends Item{
 		               Holder<Biome> holder = p_40633_.getBiome(blockpos);
 		               if (holder.is(Biomes.WARM_OCEAN)) {
 		                  if (i == 0 && p_40635_ != null && p_40635_.getAxis().isHorizontal()) {
-		                     blockstate = BuiltInRegistries.BLOCK.getTag(BlockTags.WALL_CORALS).flatMap((p_204098_) -> {
+		                     blockstate = Registry.BLOCK.getTag(BlockTags.WALL_CORALS).flatMap((p_204098_) -> {
 		                        return p_204098_.getRandomElement(p_40633_.random);
 		                     }).map((p_204100_) -> {
 		                        return p_204100_.value().defaultBlockState();
@@ -379,7 +386,7 @@ public class WandItem extends Item{
 		                        blockstate = blockstate.setValue(BaseCoralWallFanBlock.FACING, p_40635_);
 		                     }
 		                  } else if (random.nextInt(4) == 0) {
-		                     blockstate = BuiltInRegistries.BLOCK.getTag(BlockTags.UNDERWATER_BONEMEALS).flatMap((p_204091_) -> {
+		                     blockstate = Registry.BLOCK.getTag(BlockTags.UNDERWATER_BONEMEALS).flatMap((p_204091_) -> {
 		                        return p_204091_.getRandomElement(p_40633_.random);
 		                     }).map((p_204095_) -> {
 		                        return p_204095_.value().defaultBlockState();
@@ -434,7 +441,7 @@ public class WandItem extends Item{
 	         }
 
 	         p_40639_.addParticle(ParticleTypes.HAPPY_VILLAGER, (double)p_40640_.getX() + 0.5D, (double)p_40640_.getY() + 0.5D, (double)p_40640_.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
-	         RandomSource random = p_40639_.getRandom();
+	         Random random = p_40639_.getRandom();
 
 	         for(int i = 0; i < p_40641_; ++i) {
 	            double d2 = random.nextGaussian() * 0.02D;
@@ -452,10 +459,11 @@ public class WandItem extends Item{
 	      }
 	   }
 	   
-	   /*@Override
-	    public void initializeClient(Consumer<IClientItemExtensions> consumer)
+	   
+	   @Override
+	    public void initializeClient(Consumer<IItemRenderProperties> consumer)
 	    {
-	        consumer.accept(new IClientItemExtensions()
+	        consumer.accept(new IItemRenderProperties()
 	        {
 	            private final NonNullLazy<BlockEntityWithoutLevelRenderer> ister = 
 	            		NonNullLazy.of(() -> new ApprenticeWandRenderer(
@@ -463,10 +471,11 @@ public class WandItem extends Item{
 	            				Minecraft.getInstance().getEntityModels()));
 
 	            @Override
-	            public BlockEntityWithoutLevelRenderer getCustomRenderer()
+	            public BlockEntityWithoutLevelRenderer getItemStackRenderer()
 	            {
 	                return ister.get();
 	            }
 	        });
-	    }*/
+	    }
+
 }

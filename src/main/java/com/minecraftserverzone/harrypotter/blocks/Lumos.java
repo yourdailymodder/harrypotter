@@ -1,5 +1,7 @@
 package com.minecraftserverzone.harrypotter.blocks;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import com.minecraftserverzone.harrypotter.setup.Registrations;
@@ -7,7 +9,6 @@ import com.minecraftserverzone.harrypotter.setup.Registrations;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
@@ -83,13 +84,13 @@ public class Lumos extends BaseEntityBlock {
    
    @SuppressWarnings("deprecation")
    @Override
-	public void randomTick(BlockState p_49888_, ServerLevel p_49889_, BlockPos p_49890_, RandomSource p_49891_) {
+	public void randomTick(BlockState p_49888_, ServerLevel p_49889_, BlockPos p_49890_, Random p_49891_) {
 //	   p_49889_.setBlock(p_49890_, Blocks.AIR.defaultBlockState(), 2);
 		super.randomTick(p_49888_, p_49889_, p_49890_, p_49891_);
 	}
 
    @Override
-	public void animateTick(BlockState p_49888_, Level p_49889_, BlockPos p_49890_, RandomSource p_49891_) {
+	public void animateTick(BlockState p_49888_, Level p_49889_, BlockPos p_49890_, Random p_49891_) {
 	   	super.animateTick(p_49888_, p_49889_, p_49890_, p_49891_);
 	}
 

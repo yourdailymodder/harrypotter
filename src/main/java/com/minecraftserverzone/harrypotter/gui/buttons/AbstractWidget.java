@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarratedElementType;
@@ -16,11 +16,12 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 
-public abstract class AbstractWidget extends GuiComponent implements Renderable, GuiEventListener, NarratableEntry {
+public abstract class AbstractWidget extends GuiComponent implements Widget, GuiEventListener, NarratableEntry {
    public static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation("textures/gui/widgets.png");
    protected int width;
    protected int height;
@@ -70,7 +71,7 @@ public abstract class AbstractWidget extends GuiComponent implements Renderable,
    }
 
    public static MutableComponent wrapDefaultNarrationMessage(Component p_168800_) {
-      return Component.translatable("gui.narrate.button", p_168800_);
+      return new TranslatableComponent("gui.narrate.button", p_168800_);
    }
 
    public void renderButton(PoseStack p_93676_, int p_93677_, int p_93678_, float p_93679_) {
@@ -234,9 +235,9 @@ public abstract class AbstractWidget extends GuiComponent implements Renderable,
       p_168803_.add(NarratedElementType.TITLE, this.createNarrationMessage());
       if (this.active) {
          if (this.isFocused()) {
-            p_168803_.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.focused"));
+            p_168803_.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.focused"));
          } else {
-            p_168803_.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"));
+            p_168803_.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"));
          }
       }
 

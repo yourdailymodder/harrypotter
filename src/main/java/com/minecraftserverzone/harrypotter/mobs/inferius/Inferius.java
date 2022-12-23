@@ -1,5 +1,6 @@
 package com.minecraftserverzone.harrypotter.mobs.inferius;
 
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.Predicate;
 
@@ -14,7 +15,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -74,7 +74,7 @@ public class Inferius extends Monster {
    }
    
    @Override
-   public boolean shouldDropExperience() {
+	protected boolean shouldDropExperience() {
 		return true;
 	}
    
@@ -140,14 +140,14 @@ public class Inferius extends Monster {
    public boolean isBaby() {
       return this.getEntityData().get(DATA_BABY_ID);
    }
-   
-   @Override
-	public int getExperienceReward() {
-	   if (this.isBaby()) {
-	         this.xpReward = (int)((double)this.xpReward * 2.5D);
-	      }
-		return super.getExperienceReward();
-	}
+
+   protected int getExperienceReward(Player p_34322_) {
+      if (this.isBaby()) {
+         this.xpReward = (int)((double)this.xpReward * 2.5D);
+      }
+
+      return super.getExperienceReward(p_34322_);
+   }
 
    public void setBaby(boolean p_34309_) {
       this.getEntityData().set(DATA_BABY_ID, p_34309_);
@@ -276,7 +276,7 @@ public class Inferius extends Monster {
       return p_34300_;
    }
 
-   public static boolean getSpawnAsBabyOdds(RandomSource p_34303_) {
+   public static boolean getSpawnAsBabyOdds(Random p_34303_) {
       return p_34303_.nextFloat() < 0.05f;
    }
 

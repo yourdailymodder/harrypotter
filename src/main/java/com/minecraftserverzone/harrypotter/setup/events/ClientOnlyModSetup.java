@@ -3,6 +3,7 @@ package com.minecraftserverzone.harrypotter.setup.events;
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.broomsticks.BroomStickRenderer;
 import com.minecraftserverzone.harrypotter.gui.Hotbar;
+import com.minecraftserverzone.harrypotter.items.wand.ApprenticeWandRenderer;
 import com.minecraftserverzone.harrypotter.mobs.acromantula.AcromantulaRenderer;
 import com.minecraftserverzone.harrypotter.mobs.death_eater.DeathEaterRenderer;
 import com.minecraftserverzone.harrypotter.mobs.dementor.DementorRenderer;
@@ -42,15 +43,19 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = HarryPotterMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientOnlyModSetup {
@@ -58,29 +63,30 @@ public class ClientOnlyModSetup {
 	public static final ResourceLocation HOTBAR = new ResourceLocation(HarryPotterMod.MODID, "textures/gui/widgets.png");
 	
 	@SubscribeEvent
-	public static void registerKeybinds(RegisterKeyMappingsEvent event) {
-		event.register(KeyHandler.BATTLE_STANCE);
-		event.register(KeyHandler.SPELL_BOOK);
+	public static void clientSetup(FMLClientSetupEvent event) {
+		KeyHandler.register();
 	}
-	
-	
     
-	/*@SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
-    public static void onTextureStitch(TextureStitchEvent event) {
+    public static void onTextureStitch(TextureStitchEvent.Pre event) {
     	if(!event.getAtlas().location().equals(TextureAtlas.LOCATION_BLOCKS)) {
     		return;
     	}
     	event.addSprite(ApprenticeWandRenderer.TEXTURE);
-    }*/
+    }
 	
-	
-    
-    @SubscribeEvent
-	public static void onRegisterGuiOverlays(RegisterGuiOverlaysEvent event) {
-        event.registerAboveAll("harry-potter-hotbar", (gui, mStack, partialTicks, screenWidth, screenHeight) -> {
-        	gui.setupOverlayRenderState(true, false);
-            HelperFunctions.bind(ClientOnlyModSetup.HOTBAR);
+	@SubscribeEvent
+	public static void onRenderOverlayGui(final FMLClientSetupEvent event)
+    {
+		//hotbar
+		OverlayRegistry.registerOverlayTop("harry-potter-hotbar", new IIngameOverlay() {
+		@SuppressWarnings("resource")
+		@Override
+		public void render(ForgeIngameGui gui, PoseStack mStack, float partialTicks, int width, int height) {
+			gui.setupOverlayRenderState(true, false);
+			
+			HelperFunctions.bind(HOTBAR);
 
 			Player player = Minecraft.getInstance().player;
 			player.getCapability(PlayerStatsProvider.PLAYER_STATS_CAPABILITY).ifPresent(h -> {
@@ -95,13 +101,14 @@ public class ClientOnlyModSetup {
 				        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 				}
 			});
-        });
-    }
+		}
 
-	 public static void renderHotbar(PoseStack mStack, ForgeGui gui) {
+		private void renderHotbar(PoseStack mStack, ForgeIngameGui gui) {
 			Minecraft minecraft = Minecraft.getInstance();
 			Hotbar.renderHotbar(0, mStack, gui, minecraft);
 		}
+    });
+    }
 
 	@SubscribeEvent
 	public static void registerEntityRenderer(EntityRenderersEvent.RegisterRenderers event) {
@@ -130,7 +137,8 @@ public class ClientOnlyModSetup {
 		event.registerEntityRenderer(Registrations.EVANESCO.get(), m -> new EvanescoRenderer(m));
 		event.registerEntityRenderer(Registrations.FIRE_STORM.get(), m -> new FireStormRenderer(m));
 		event.registerEntityRenderer(Registrations.FIRE_STORM_SPAWNER.get(), ThrownItemRenderer::new);
-
+		
+		
 		//mobs
 		event.registerEntityRenderer(Registrations.EXPECTO_PATRONUM.get(), m -> new ExpectoPatronumRenderer(m));
 		event.registerEntityRenderer(Registrations.PATRONUS_DEER.get(), m -> new PatronusDeerRenderer(m));
@@ -139,8 +147,14 @@ public class ClientOnlyModSetup {
 		event.registerEntityRenderer(Registrations.TROLL.get(), m -> new TrollRenderer(m));
 		event.registerEntityRenderer(Registrations.INFERIUS.get(), m -> new InferiusRenderer(m));
 		event.registerEntityRenderer(Registrations.ACROMANTULA.get(), m -> new AcromantulaRenderer<>(m));
-
+		
 		//models
 		event.registerEntityRenderer(Registrations.BROOMSTICK.get(), m -> new BroomStickRenderer(m));
+	}
+	
+	@SubscribeEvent
+	public static void registerFactories(ParticleFactoryRegisterEvent event) {
+//		Minecraft.getInstance().particleEngine.register(Registrations.AURA_PARTICLE.get(), new AuraParticle.Provider());
+//		Minecraft.getInstance().particleEngine.register(Registrations.CLOTH_PARTICLE.get(), ClothParticle.Provider::new);
 	}
 }

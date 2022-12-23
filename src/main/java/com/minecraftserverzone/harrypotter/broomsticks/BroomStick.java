@@ -73,9 +73,11 @@ public class BroomStick extends LivingEntity{
 	      this.verifyEquippedItem(p_31585_);
 	      switch(p_31584_.getType()) {
 	      case HAND:
+	         this.equipEventAndSound(p_31585_);
 	         this.handItems.set(p_31584_.getIndex(), p_31585_);
 	         break;
 	      case ARMOR:
+	         this.equipEventAndSound(p_31585_);
 	         this.armorItems.set(p_31584_.getIndex(), p_31585_);
 	      }
 

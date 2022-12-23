@@ -1,10 +1,9 @@
 package com.minecraftserverzone.harrypotter.spells.avada_kedavra;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.broomsticks.BroomStick;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.spells.DamageSpell;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -77,7 +76,7 @@ public class AvadaKedavra extends DamageSpell {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
@@ -97,7 +96,7 @@ public class AvadaKedavra extends DamageSpell {
 		// just add back the alpha if it is going to be full on
 		color += 255 << 24; // 0xFF.FF.01.0F
 		
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0x69ff7d).toVector3f();//FastColor.ARGB32.color(255, 252, 119, 3); 16711680
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0x69ff7d));//FastColor.ARGB32.color(255, 252, 119, 3); 16711680
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

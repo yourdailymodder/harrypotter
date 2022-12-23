@@ -12,7 +12,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.HumanoidArm;
@@ -24,7 +24,7 @@ public class Hotbar extends Screen{
 	public static String[] hotbars = {"0","0","0","0","0","0","0","0","0"};
 	
 	public Hotbar() {
-		super(Component.translatable("screen.harrypotter.hotbar"));
+		super(new TranslatableComponent("screen.harrypotter.hotbar"));
 	}
 
 	protected static final ResourceLocation WIDGETS_LOCATION = new ResourceLocation(HarryPotterMod.MODID, "textures/gui/widgets.png");
@@ -136,7 +136,7 @@ public class Hotbar extends Screen{
 	            }
 	         }
 
-	         if (minecraft.options.attackIndicator().get() == AttackIndicatorStatus.HOTBAR) {
+	         if (minecraft.options.attackIndicator == AttackIndicatorStatus.HOTBAR) {
 	            float f = minecraft.player.getAttackStrengthScale(0.0F);
 	            if (f < 1.0F) {
 	               int k2 = minecraft.getInstance().getWindow().getGuiScaledHeight() - 20;

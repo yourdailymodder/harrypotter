@@ -1,12 +1,11 @@
 package com.minecraftserverzone.harrypotter.spells.avada_kedavra;
 
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -66,8 +65,8 @@ public class AvadaKedavraRenderer extends EntityRenderer<AvadaKedavra> {
          vec32 = vec32.normalize();
          float f5 = (float)Math.acos(vec32.y);
          float f6 = (float)Math.atan2(vec32.z, vec32.x);
-         p_115376_.mulPose(Axis.YP.rotationDegrees((((float)Math.PI / 2F) - f6) * (180F / (float)Math.PI)));
-         p_115376_.mulPose(Axis.XP.rotationDegrees(f5 * (180F / (float)Math.PI)));
+         p_115376_.mulPose(Vector3f.YP.rotationDegrees((((float)Math.PI / 2F) - f6) * (180F / (float)Math.PI)));
+         p_115376_.mulPose(Vector3f.XP.rotationDegrees(f5 * (180F / (float)Math.PI)));
          int i = 1;
          float f7 = f1 * 0.05F * -1.5F;
          float f8 = f * f;

@@ -1,10 +1,9 @@
 package com.minecraftserverzone.harrypotter.spells.expecto_patronum;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.mobs.patronus_deer.PatronusDeer;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.spells.NormalBallTypeSpell;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -53,13 +52,13 @@ public class ExpectoPatronum extends NormalBallTypeSpell {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
 	@Override
 	protected ParticleOptions getTrailParticle() {
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0xc0c0c0).toVector3f();
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0xc0c0c0));
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

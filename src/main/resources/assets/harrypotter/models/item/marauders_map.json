@@ -1,6 +1,6 @@
 {
 	"parent": "item/handheld",
 	"textures": {
-		"layer0":"harrypotter:item/marauders_map"
+		"layer0":"harrypotter:items/marauders_map"
 	}
 }

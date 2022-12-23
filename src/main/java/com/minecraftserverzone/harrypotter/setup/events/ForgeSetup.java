@@ -2,17 +2,24 @@ package com.minecraftserverzone.harrypotter.setup.events;
 
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.broomsticks.BroomStick;
+import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.setup.capabilities.PlayerStatsProvider;
+import com.minecraftserverzone.harrypotter.setup.config.HarryPotterModConfig;
 import com.minecraftserverzone.harrypotter.setup.network.Networking;
 import com.minecraftserverzone.harrypotter.setup.network.PacketDataCDForAll;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraftforge.common.world.MobSpawnSettingsBuilder;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -31,8 +38,8 @@ public class ForgeSetup {
 
 	@SubscribeEvent
 	public static void damageEvent(LivingDamageEvent event) {
-		if(event.getEntity().getVehicle() != null) {
-			if(event.getEntity().getVehicle() instanceof BroomStick) {
+		if(event.getEntityLiving().getVehicle() != null) {
+			if(event.getEntityLiving().getVehicle() instanceof BroomStick) {
 				if(event.getSource() == DamageSource.FALL) {
 					event.setAmount(0);
 				}
@@ -86,5 +93,94 @@ public class ForgeSetup {
             event.getOriginal().invalidateCaps();
 		}
             
-    }	
+    }
+	
+
+//	//mob spawns
+	@SubscribeEvent(priority = EventPriority.HIGH)
+    public static void onBiomeLoadingEvent(final BiomeLoadingEvent event) {
+		if(event.getName() == null) {
+            return;
+		}
+		String biomename = event.getName().toString();
+		String[] spawnInBiomesList = HarryPotterModConfig.DEATH_EATER_BIOME.get().split(",");
+
+		if(HarryPotterModConfig.DEATH_EATER[0].get() > 0) {
+			MobSpawnSettingsBuilder spawns = event.getSpawns();
+			if(HarryPotterModConfig.DEATH_EATER_BIOME.get() == "") {
+				spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.DEATH_EATER.get(), HarryPotterModConfig.DEATH_EATER[0].get(), HarryPotterModConfig.DEATH_EATER[1].get(), HarryPotterModConfig.DEATH_EATER[2].get()));
+			}
+
+			for(String list : spawnInBiomesList) {
+				if(biomename.equals(list)) {
+					spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.DEATH_EATER.get(), HarryPotterModConfig.DEATH_EATER[0].get(), HarryPotterModConfig.DEATH_EATER[1].get(), HarryPotterModConfig.DEATH_EATER[2].get()));
+				}
+			}
+		}
+
+		spawnInBiomesList = HarryPotterModConfig.TROLL_BIOME.get().split(",");
+
+		if(HarryPotterModConfig.TROLL[0].get() > 0) {
+			MobSpawnSettingsBuilder spawns = event.getSpawns();
+			if(HarryPotterModConfig.TROLL_BIOME.get() == "") {
+				spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.TROLL.get(), HarryPotterModConfig.TROLL[0].get(), HarryPotterModConfig.TROLL[1].get(), HarryPotterModConfig.TROLL[2].get()));
+			}
+
+			for(String list : spawnInBiomesList) {
+				if(biomename.equals(list)) {
+					spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.TROLL.get(), HarryPotterModConfig.TROLL[0].get(), HarryPotterModConfig.TROLL[1].get(), HarryPotterModConfig.TROLL[2].get()));
+				}
+			}
+		}
+		
+		//dementors
+		spawnInBiomesList = HarryPotterModConfig.DEMENTOR_BIOME.get().split(",");
+
+		if(HarryPotterModConfig.DEMENTOR[0].get() > 0) {
+			MobSpawnSettingsBuilder spawns = event.getSpawns();
+			if(HarryPotterModConfig.DEMENTOR_BIOME.get() == "") {
+				spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.DEMENTOR.get(), HarryPotterModConfig.DEMENTOR[0].get(), HarryPotterModConfig.DEMENTOR[1].get(), HarryPotterModConfig.DEMENTOR[2].get()));
+			}
+
+			for(String list : spawnInBiomesList) {
+				if(biomename.equals(list)) {
+					spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.DEMENTOR.get(), HarryPotterModConfig.DEMENTOR[0].get(), HarryPotterModConfig.DEMENTOR[1].get(), HarryPotterModConfig.DEMENTOR[2].get()));
+				}
+			}
+		}
+		
+		//inferius
+		spawnInBiomesList = HarryPotterModConfig.INFERIUS_BIOME.get().split(",");
+
+		if(HarryPotterModConfig.INFERIUS[0].get() > 0) {
+			MobSpawnSettingsBuilder spawns = event.getSpawns();
+			if(HarryPotterModConfig.INFERIUS_BIOME.get() == "") {
+				spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.INFERIUS.get(), HarryPotterModConfig.INFERIUS[0].get(), HarryPotterModConfig.INFERIUS[1].get(), HarryPotterModConfig.INFERIUS[2].get()));
+			}
+
+			for(String list : spawnInBiomesList) {
+				if(biomename.equals(list)) {
+					spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.INFERIUS.get(), HarryPotterModConfig.INFERIUS[0].get(), HarryPotterModConfig.INFERIUS[1].get(), HarryPotterModConfig.INFERIUS[2].get()));
+				}
+			}
+		}
+		
+		//acromantula
+		spawnInBiomesList = HarryPotterModConfig.ACROMANTULA_BIOME.get().split(",");
+
+		if(HarryPotterModConfig.ACROMANTULA[0].get() > 0) {
+			MobSpawnSettingsBuilder spawns = event.getSpawns();
+			if(HarryPotterModConfig.ACROMANTULA_BIOME.get() == "") {
+				spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.ACROMANTULA.get(), HarryPotterModConfig.ACROMANTULA[0].get(), HarryPotterModConfig.ACROMANTULA[1].get(), HarryPotterModConfig.ACROMANTULA[2].get()));
+			}
+
+			for(String list : spawnInBiomesList) {
+				if(biomename.equals(list)) {
+					spawns.getSpawner(MobCategory.MONSTER).add(new SpawnerData(Registrations.ACROMANTULA.get(), HarryPotterModConfig.ACROMANTULA[0].get(), HarryPotterModConfig.ACROMANTULA[1].get(), HarryPotterModConfig.ACROMANTULA[2].get()));
+				}
+			}
+		}
+
+	}
+	
 }

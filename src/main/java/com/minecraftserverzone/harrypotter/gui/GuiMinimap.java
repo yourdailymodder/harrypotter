@@ -5,12 +5,12 @@ import java.util.List;
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +24,7 @@ public class GuiMinimap extends Screen{
 	public static final ResourceLocation MAP = new ResourceLocation(HarryPotterMod.MODID, "textures/gui/marauders_map.png");
 
 	protected GuiMinimap() {
-		super(Component.translatable("screen.harrypotter.minimap"));
+		super(new TranslatableComponent("screen.harrypotter.minimap"));
 	}
 
 	public static void renderMinimap(float p_93010_, PoseStack p_96562_, Gui gui, Minecraft minecraft) {
@@ -65,7 +65,7 @@ public class GuiMinimap extends Screen{
 			int translatez = 0;
 			
 			p_96562_.translate(translatex, translatey, translatez);
-			p_96562_.mulPose(Axis.ZP.rotationDegrees((float) playerYrotation));
+			p_96562_.mulPose(Vector3f.ZP.rotationDegrees((float) playerYrotation));
 			
 			gui.blit(p_96562_, screenWidth/2 - 25, (minecraft.getWindow().getGuiScaledHeight()/2) - 26, 50, 0, 48, 49);
 				int k2 = FastColor.ARGB32.color(255, 10, 4, 10);

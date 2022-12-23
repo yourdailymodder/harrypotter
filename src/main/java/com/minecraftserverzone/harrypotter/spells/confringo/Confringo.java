@@ -2,12 +2,11 @@ package com.minecraftserverzone.harrypotter.spells.confringo;
 
 import java.util.List;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.setup.capabilities.PlayerStatsProvider;
 import com.minecraftserverzone.harrypotter.spells.DamageSpell;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -17,6 +16,7 @@ import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -96,7 +96,8 @@ public class Confringo extends DamageSpell {
 				}
 			}
 			//check if there is an entity in near, if yes then damage entity
-	         this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, Level.ExplosionInteraction.MOB);
+			Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+	         this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
 	         this.discard();
 		}
 		super.onHitBlock(p_37258_);
@@ -139,19 +140,20 @@ public class Confringo extends DamageSpell {
 				}
 			}
 				//explode
-				this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, Level.ExplosionInteraction.MOB);
+				Explosion.BlockInteraction explosion$blockinteraction = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE;
+		        this.level.explode(this, this.getX(), this.getY(), this.getZ(), (float)2, explosion$blockinteraction);
 			}
 	         this.discard();
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
 	@Override
 	protected ParticleOptions getTrailParticle() {
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0xe84d15).toVector3f();
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0xe84d15));
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

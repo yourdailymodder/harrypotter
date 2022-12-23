@@ -3,7 +3,7 @@ package com.minecraftserverzone.harrypotter.items;
 import com.minecraftserverzone.harrypotter.broomsticks.BroomStick;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +31,7 @@ public class BroomStickItem extends Item{
 			
 			if(p_41433_.getMainHandItem().getItem() == Registrations.BROOMSTICK_ITEM.get()) {
 				if(p_41433_.getMainHandItem().getTagElement("customnames") != null) {
-					Component customname = Component.literal(p_41433_.getMainHandItem().getTagElement("customnames").getString("name"));
+					TextComponent customname = new TextComponent(p_41433_.getMainHandItem().getTagElement("customnames").getString("name"));
 					cs.setCustomName(customname);
 				}
 				p_41433_.getMainHandItem().shrink(1);

@@ -1,12 +1,11 @@
 package com.minecraftserverzone.harrypotter.spells.reparo;
 
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -36,7 +35,7 @@ public class ReparoRenderer extends EntityRenderer<Reparo> {
       p_114083_.translate(0, 0.3f, 0);
 //      p_114083_.scale(scale1, scale1, scale1);
       p_114083_.mulPose(this.entityRenderDispatcher.cameraOrientation());
-      p_114083_.mulPose(Axis.YP.rotationDegrees(180.0F));
+      p_114083_.mulPose(Vector3f.YP.rotationDegrees(180.0F));
       PoseStack.Pose posestack$pose = p_114083_.last();
       Matrix4f matrix4f = posestack$pose.pose();
       Matrix3f matrix3f = posestack$pose.normal();

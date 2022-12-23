@@ -2,8 +2,6 @@ package com.minecraftserverzone.harrypotter.spells.finite;
 
 import java.util.List;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.spells.DamageSpell;
 import com.minecraftserverzone.harrypotter.spells.NormalBallTypeSpell;
@@ -11,6 +9,7 @@ import com.minecraftserverzone.harrypotter.spells.accio.PullSpell;
 import com.minecraftserverzone.harrypotter.spells.aqua_eructo.WaterSpell;
 import com.minecraftserverzone.harrypotter.spells.glacius.IceEntity;
 import com.minecraftserverzone.harrypotter.spells.mobilicorpus.BodyMoverEntity;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -100,13 +99,13 @@ public class Finite extends DamageSpell {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
 	@Override
 	protected ParticleOptions getTrailParticle() {
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0xb5120c).toVector3f();
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0xb5120c));
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

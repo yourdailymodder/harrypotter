@@ -45,7 +45,7 @@ public class Acromantula extends Spider {
       this.xpReward = 10;
    }
 	@Override
-	public boolean shouldDropExperience() {
+	protected boolean shouldDropExperience() {
 		return true;
 	}
 	

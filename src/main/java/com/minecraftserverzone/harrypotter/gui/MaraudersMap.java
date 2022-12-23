@@ -2,17 +2,15 @@ package com.minecraftserverzone.harrypotter.gui;
 
 import java.util.List;
 
-import org.joml.Quaternionf;
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
 import net.minecraft.world.entity.Entity;
@@ -26,7 +24,7 @@ public class MaraudersMap extends Screen{
 	public static final ResourceLocation MAP = new ResourceLocation(HarryPotterMod.MODID, "textures/gui/marauders_map.png");
 
 	public MaraudersMap() {
-		super(Component.translatable("screen.harrypotter.maraudersmap"));
+		super(new TranslatableComponent("screen.harrypotter.maraudersmap"));
 	}
 
 	@Override
@@ -95,7 +93,7 @@ public class MaraudersMap extends Screen{
 					
 					p_96562_.pushPose();
 					p_96562_.translate(translatex, translatey, 0);
-					p_96562_.mulPose(Axis.ZP.rotationDegrees((float) playerYrotation));
+					p_96562_.mulPose(Vector3f.ZP.rotationDegrees((float) playerYrotation));
 
 						this.blit(p_96562_, playerx + posx - 4, playerz + posz - 3, 0, 187, 9, 7);
 						p_96562_.popPose();
@@ -126,7 +124,7 @@ public class MaraudersMap extends Screen{
 				int translatez = 0;
 				
 				p_96562_.translate(translatex, translatey, translatez);
-				p_96562_.mulPose(Axis.ZP.rotationDegrees((float) playerYrotation));
+				p_96562_.mulPose(Vector3f.ZP.rotationDegrees((float) playerYrotation));
 
 				this.blit(p_96562_, playerx - 4, playerz - 3, 0, 180, 9, 7);
 //			GuiComponent.fill(p_96562_, playerx - 2, playerz - 2, playerx + 2, playerz + 2, k2);
@@ -142,8 +140,7 @@ public class MaraudersMap extends Screen{
 	public static void rotateAroundPivot(PoseStack poseStack, Vector3f pivot, Vector3f axis, float angle, boolean degrees)
     {
         poseStack.translate(pivot.x(), pivot.y(), pivot.z());
-        Quaternionf quaternionf = (new Quaternionf()).setAngleAxis((double)(angle * ((float)Math.PI / 180F)), axis.x, axis.y, axis.z);
-        poseStack.mulPose(quaternionf); //(new Quaternionf(axis, angle, degrees));
+        poseStack.mulPose(new Quaternion(axis, angle, degrees));
         poseStack.translate(-pivot.x(), -pivot.y(), -pivot.z());
     }
 	

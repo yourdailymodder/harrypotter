@@ -13,7 +13,6 @@ import com.minecraftserverzone.harrypotter.mobs.dementor.Dementor;
 import com.minecraftserverzone.harrypotter.mobs.inferius.Inferius;
 import com.minecraftserverzone.harrypotter.mobs.patronus_deer.PatronusDeer;
 import com.minecraftserverzone.harrypotter.mobs.troll.Troll;
-import com.minecraftserverzone.harrypotter.setup.BiomeModifierTest.TestModifier;
 import com.minecraftserverzone.harrypotter.spells.accio.Accio;
 import com.minecraftserverzone.harrypotter.spells.alarte_ascandare.AlarteAscandare;
 import com.minecraftserverzone.harrypotter.spells.aqua_eructo.AquaEructo;
@@ -40,44 +39,53 @@ import com.minecraftserverzone.harrypotter.spells.mobilicorpus.Mobilicorpus;
 import com.minecraftserverzone.harrypotter.spells.reparo.Reparo;
 import com.minecraftserverzone.harrypotter.spells.sectumsempra.Sectumsempra;
 import com.minecraftserverzone.harrypotter.spells.wingardium_leviosa.WingardiumLeviosa;
-import com.minecraftserverzone.harrypotter.worldgen.structures.HiddenBasementStructure;
-import com.minecraftserverzone.harrypotter.worldgen.structures.LabyrinthStructure;
 import com.minecraftserverzone.harrypotter.worldgen.structures.WitchTowerStructure;
-import com.mojang.serialization.Codec;
 
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class Registrations {
+
+	public static final CreativeModeTab CUSTOM_TAB = new CreativeModeTab("harrypotter") {
+		@Override
+		public ItemStack makeIcon() {
+			return new ItemStack(Registrations.APPRENTICE_WAND.get());
+		}
+    };
     
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, HarryPotterMod.MODID);
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, HarryPotterMod.MODID);
-	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, HarryPotterMod.MODID);
+	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, HarryPotterMod.MODID);
 	public static final DeferredRegister<SoundEvent> SOUNDS  = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, HarryPotterMod.MODID);
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, HarryPotterMod.MODID);
 	private static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, HarryPotterMod.MODID);
-	private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, HarryPotterMod.MODID);
-	private static final DeferredRegister<StructureType<?>> STRUCTURES = DeferredRegister.create(Registries.STRUCTURE_TYPE, HarryPotterMod.MODID);
-	public static final DeferredRegister<Codec<? extends BiomeModifier>> SPAWNS = DeferredRegister.create(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, HarryPotterMod.MODID);
+	private static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, HarryPotterMod.MODID);
+	private static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, HarryPotterMod.MODID);
+
+
 	
 	public static void init() {
 		BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -88,61 +96,52 @@ public class Registrations {
 		EFFECTS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		SPAWNS.register(FMLJavaModLoadingContext.get().getModEventBus());	
-		//spawns
-		SPAWNS.register("harry_potter_spawns", TestModifier::makeCodec);
 	}
 
+	//tags
+	public static final TagKey<Biome> HAS_WITCH_TOWER = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(HarryPotterMod.MODID, "has_structure/witch_tower"));
+	
 	//structures
-	public static final RegistryObject<StructureType<WitchTowerStructure>> WITCH_TOWER = 
-			STRUCTURES.register("witch_tower", () -> () -> WitchTowerStructure.CODEC);
-	
-	public static final RegistryObject<StructureType<LabyrinthStructure>> LABYRINTH = 
-			STRUCTURES.register("labyrinth", () -> () -> LabyrinthStructure.CODEC);
-	
-	public static final RegistryObject<StructureType<HiddenBasementStructure>> HIDDEN_BASEMENT = 
-			STRUCTURES.register("hidden_basement", () -> () -> HiddenBasementStructure.CODEC);
-	
-//	public static final RegistryObject<StructureFeature<JigsawConfiguration>> WITCH_TOWER = 
-//			STRUCTURES.register("witch_tower", WitchTowerStructure::new);
-//	public static final RegistryObject<StructureFeature<JigsawConfiguration>> LABYRINTH = 
-//			STRUCTURES.register("labyrinth", WitchTowerStructure::new);
-//	public static final RegistryObject<StructureFeature<JigsawConfiguration>> HIDDEN_BASEMENT = 
-//			STRUCTURES.register("hidden_basement", WitchTowerStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> WITCH_TOWER = 
+			STRUCTURES.register("witch_tower", WitchTowerStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> LABYRINTH = 
+			STRUCTURES.register("labyrinth", WitchTowerStructure::new);
+	public static final RegistryObject<StructureFeature<JigsawConfiguration>> HIDDEN_BASEMENT = 
+			STRUCTURES.register("hidden_basement", WitchTowerStructure::new);
 	
 	//sound effects
 	public static final RegistryObject<SoundEvent> DEFAULT_SPELL = SOUNDS.register(
-			"spell.harrypotter.default", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.default")));
+			"spell.harrypotter.default", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.default")));
 	
 	public static final RegistryObject<SoundEvent> SMALL_HEAL = SOUNDS.register(
-			"spell.harrypotter.sheal", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.sheal")));
+			"spell.harrypotter.sheal", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.sheal")));
 	public static final RegistryObject<SoundEvent> MEDIUM_HEAL = SOUNDS.register(
-			"spell.harrypotter.mheal", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.mheal")));
+			"spell.harrypotter.mheal", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.mheal")));
 	
 	public static final RegistryObject<SoundEvent> SMOKE = SOUNDS.register(
-			"spell.harrypotter.smoke", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.smoke")));
+			"spell.harrypotter.smoke", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.smoke")));
 	public static final RegistryObject<SoundEvent> ICE = SOUNDS.register(
-			"spell.harrypotter.ice", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.ice")));
+			"spell.harrypotter.ice", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.ice")));
 	public static final RegistryObject<SoundEvent> BUFF = SOUNDS.register(
-			"spell.harrypotter.magic3", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic3")));
+			"spell.harrypotter.magic3", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic3")));
 	public static final RegistryObject<SoundEvent> MAGIC_SPELL6 = SOUNDS.register(
-			"spell.harrypotter.magic6", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic6")));
+			"spell.harrypotter.magic6", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic6")));
 	public static final RegistryObject<SoundEvent> MAGIC_SPELL7 = SOUNDS.register(
-			"spell.harrypotter.magic7", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic7")));
+			"spell.harrypotter.magic7", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.magic7")));
 	
 	public static final RegistryObject<SoundEvent> SPELL3 = SOUNDS.register(
-			"spell.harrypotter.spell3", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.spell3")));
+			"spell.harrypotter.spell3", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.spell3")));
 	public static final RegistryObject<SoundEvent> FIREBALL_SOUND1 = SOUNDS.register(
-			"spell.harrypotter.fireball", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.fireball")));
+			"spell.harrypotter.fireball", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.fireball")));
 	public static final RegistryObject<SoundEvent> SPARKS = SOUNDS.register(
-			"spell.harrypotter.sparks", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.sparks")));
+			"spell.harrypotter.sparks", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.sparks")));
 	public static final RegistryObject<SoundEvent> EXPLOSION = SOUNDS.register(
-			"spell.harrypotter.explosion", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.explosion")));
+			"spell.harrypotter.explosion", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.explosion")));
 	public static final RegistryObject<SoundEvent> EXPLOSION2 = SOUNDS.register(
-			"spell.harrypotter.explosion2", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.explosion2")));
+			"spell.harrypotter.explosion2", () -> new SoundEvent(new ResourceLocation(HarryPotterMod.MODID, "spell.harrypotter.explosion2")));
 	
-	public static final RegistryObject<Item> APPRENTICE_WAND = ITEMS.register("apprentice_wand", ()-> new WandItem(new Item.Properties().stacksTo(1)));
-	public static final RegistryObject<Item> MARAUDERS_MAP = ITEMS.register("marauders_map", ()-> new MaraudersMapItem(new Item.Properties()));
+	public static final RegistryObject<Item> APPRENTICE_WAND = ITEMS.register("apprentice_wand", ()-> new WandItem(new Item.Properties().stacksTo(1).tab(CUSTOM_TAB)));
+	public static final RegistryObject<Item> MARAUDERS_MAP = ITEMS.register("marauders_map", ()-> new MaraudersMapItem(new Item.Properties().tab(CUSTOM_TAB)));
 	
 	//effects
 	public static final RegistryObject<MobEffect> WINGARDIUM_LEVIOSA_EFFECT =
@@ -154,6 +153,7 @@ public class Registrations {
 	new Lumos(BlockBehaviour.Properties.of(Material.AIR)
 			.noCollission()
 			.randomTicks()
+			.noDrops()
 			.air()
 			.dynamicShape()
 			.lightLevel((p_152605_) -> {
@@ -165,7 +165,7 @@ public class Registrations {
 			BLOCK_ENTITIES.register("lumos", ()-> BlockEntityType.Builder.of(SimpleLightBlockEntity::new, GLOWING_AIR.get()).build(null));
 	
 	
-	public static final RegistryObject<Item> GLOWING_AIR_ITEM = ITEMS.register("lumos", () -> new BlockItem(GLOWING_AIR.get(), new Item.Properties()));
+	public static final RegistryObject<Item> GLOWING_AIR_ITEM = ITEMS.register("lumos", () -> new BlockItem(GLOWING_AIR.get(), new Item.Properties().tab(CUSTOM_TAB)));
 
 	
 	//spells
@@ -357,7 +357,7 @@ public class Registrations {
 	        .build("dementor"));
 	public static final RegistryObject<Item> DEMENTOR_EGG = ITEMS.register("dementor_spawn_egg",
 			() -> new ForgeSpawnEggItem(DEMENTOR, 0x5b6669, 0x152326,
-			new Item.Properties()));
+			new Item.Properties().tab(CUSTOM_TAB)));
 	
 	//death eaters
 	public static final RegistryObject<EntityType<DeathEater>> DEATH_EATER = ENTITIES.register("death_eater", () -> EntityType.Builder.of(DeathEater::new, MobCategory.MONSTER)
@@ -366,7 +366,7 @@ public class Registrations {
 	        .build("death_eater"));
 	public static final RegistryObject<Item> DEATH_EATER_EGG = ITEMS.register("death_eater_spawn_egg",
 			() -> new ForgeSpawnEggItem(DEATH_EATER, 0x440059, 0x212121,
-			new Item.Properties()));
+			new Item.Properties().tab(CUSTOM_TAB)));
 
 	//troll
 	public static final RegistryObject<EntityType<Troll>> TROLL = ENTITIES.register("troll", () -> EntityType.Builder.of(Troll::new, MobCategory.MONSTER)
@@ -375,7 +375,7 @@ public class Registrations {
 	        .build("troll"));
 	public static final RegistryObject<Item> TROLL_EGG = ITEMS.register("troll_spawn_egg",
 			() -> new ForgeSpawnEggItem(TROLL, 0x8c824d, 0xb0b58d,
-			new Item.Properties()));
+			new Item.Properties().tab(CUSTOM_TAB)));
 
 //inferius
 	public static final RegistryObject<EntityType<Inferius>> INFERIUS = ENTITIES.register("inferius", () -> EntityType.Builder.of(Inferius::new, MobCategory.MONSTER)
@@ -384,7 +384,7 @@ public class Registrations {
 	        .build("inferius"));
 	public static final RegistryObject<Item> INFERIUS_EGG = ITEMS.register("inferius_spawn_egg",
 			() -> new ForgeSpawnEggItem(INFERIUS, 0xb8b8b8, 0x696969,
-			new Item.Properties()));
+			new Item.Properties().tab(CUSTOM_TAB)));
 
 //acromantula
 	public static final RegistryObject<EntityType<Acromantula>> ACROMANTULA = ENTITIES.register("acromantula", () -> EntityType.Builder.of(Acromantula::new, MobCategory.MONSTER)
@@ -393,7 +393,7 @@ public class Registrations {
 	        .build("acromantula"));
 	public static final RegistryObject<Item> ACROMANTULA_EGG = ITEMS.register("acromantula_spawn_egg",
 			() -> new ForgeSpawnEggItem(ACROMANTULA, 0x717b80, 0x46565e,
-			new Item.Properties()));
+			new Item.Properties().tab(CUSTOM_TAB)));
 
 	//default broomstick
 	public static final RegistryObject<EntityType<BroomStick>> BROOMSTICK = ENTITIES.register("broomstick", () -> EntityType.Builder.of(BroomStick::new, MobCategory.MISC)
@@ -401,6 +401,6 @@ public class Registrations {
 	        .clientTrackingRange(12)
 	        .build("broomstick"));
 	
-	public static final RegistryObject<Item> BROOMSTICK_ITEM = ITEMS.register("broomstick", ()-> new BroomStickItem(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> BROOMSTICK_ITEM = ITEMS.register("broomstick", ()-> new BroomStickItem(new Item.Properties().tab(CUSTOM_TAB).stacksTo(1)));
 	
 }

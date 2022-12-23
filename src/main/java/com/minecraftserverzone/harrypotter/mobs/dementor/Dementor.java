@@ -1,7 +1,6 @@
 package com.minecraftserverzone.harrypotter.mobs.dementor;
 
 import java.util.EnumSet;
-
 import javax.annotation.Nullable;
 
 import com.minecraftserverzone.harrypotter.mobs.death_eater.DeathEater;
@@ -15,11 +14,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -32,6 +34,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 public class Dementor extends Monster {
@@ -52,7 +55,7 @@ public class Dementor extends Monster {
    }
    
    @Override
-   public boolean shouldDropExperience() {
+	protected boolean shouldDropExperience() {
 		return true;
 	}
    
@@ -163,6 +166,13 @@ public class Dementor extends Monster {
 
    public float getBrightness() {
       return 1.0F;
+   }
+
+   @Nullable
+   public SpawnGroupData finalizeSpawn(ServerLevelAccessor p_34002_, DifficultyInstance p_34003_, MobSpawnType p_34004_, @Nullable SpawnGroupData p_34005_, @Nullable CompoundTag p_34006_) {
+      this.populateDefaultEquipmentSlots(p_34003_);
+      this.populateDefaultEquipmentEnchantments(p_34003_);
+      return super.finalizeSpawn(p_34002_, p_34003_, p_34004_, p_34005_, p_34006_);
    }
 
    class VexChargeAttackGoal extends Goal {

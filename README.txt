@@ -1,8 +1,4 @@
-The codes in this mod very made a bit hastly and it was the first mod i made while using capabilities and packets so don't expect some high quality stuff.
-You can't use these codes to create an update for this mod and redistribute it with the same name as this mod on any sites.
 
-
-Forge Setup:
 Source installation information for modders
 -------------------------------------------
 This code follows the Minecraft Forge installation methodology. It will apply
@@ -44,7 +40,7 @@ https://github.com/MinecraftForge/MCPConfig/blob/master/Mojang.md
 
 Additional Resources: 
 =========================
-Community Documentation: https://mcforge.readthedocs.io/en/latest/gettingstarted/  
+Community Documentation: http://mcforge.readthedocs.io/en/latest/gettingstarted/  
 LexManos' Install Video: https://www.youtube.com/watch?v=8VEdtQLuLO0  
 Forge Forum: https://forums.minecraftforge.net/  
 Forge Discord: https://discord.gg/UvedJ9m  

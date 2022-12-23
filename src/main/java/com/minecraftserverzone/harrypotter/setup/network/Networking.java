@@ -26,32 +26,32 @@ public class Networking {
         INSTANCE.messageBuilder(PacketSpells.class, nextID())
                 .encoder(PacketSpells::toBytes)
                 .decoder(PacketSpells::new)
-                .consumerMainThread(PacketSpells::handle)
+                .consumer(PacketSpells::handle)
                 .add();
         INSTANCE.messageBuilder(PacketDataForAll.class, nextID())
 		        .encoder(PacketDataForAll::toBytes)
 		        .decoder(PacketDataForAll::new)
-		        .consumerMainThread(PacketDataForAll::handle)
+		        .consumer(PacketDataForAll::handle)
 		        .add();
         INSTANCE.messageBuilder(PacketData.class, nextID())
 		        .encoder(PacketData::toBytes)
 		        .decoder(PacketData::new)
-		        .consumerMainThread(PacketData::handle)
+		        .consumer(PacketData::handle)
 		        .add();
         INSTANCE.messageBuilder(PacketDataCDForAll.class, nextID())
 		        .encoder(PacketDataCDForAll::toBytes)
 		        .decoder(PacketDataCDForAll::new)
-		        .consumerMainThread(PacketDataCDForAll::handle)
+		        .consumer(PacketDataCDForAll::handle)
 		        .add();
         INSTANCE.messageBuilder(PacketHerbivicus.class, nextID())
 		        .encoder(PacketHerbivicus::toBytes)
 		        .decoder(PacketHerbivicus::new)
-		        .consumerMainThread(PacketHerbivicus::handle)
+		        .consumer(PacketHerbivicus::handle)
 		        .add();
         INSTANCE.messageBuilder(PacketHerbivicusToClient.class, nextID())
         		.encoder(PacketHerbivicusToClient::toBytes)
 		        .decoder(PacketHerbivicusToClient::new)
-		        .consumerMainThread(PacketHerbivicusToClient::handle)
+		        .consumer(PacketHerbivicusToClient::handle)
 		        .add();
     }
 

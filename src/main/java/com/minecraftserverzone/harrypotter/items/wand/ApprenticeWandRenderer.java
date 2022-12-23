@@ -4,11 +4,9 @@ import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -38,13 +36,7 @@ public class ApprenticeWandRenderer extends BlockEntityWithoutLevelRenderer{
 	              p_108832_.pushPose();
 	              p_108832_.scale(1.0F, -1.0F, -1.0F);
 	              Material material = BASE;
-	              
-	              VertexConsumer vertexconsumer2 = ItemRenderer.getFoilBufferDirect(p_108833_, this.apprenticewand.renderType(TEXTURE), false, p_108830_.hasFoil());
-	              //VertexConsumer vertexconsumer3 = p_108833_.getBuffer(RenderType.outline(TEXTURE));
-	              
-	              //VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(p_108833_, this.apprenticewand.renderType(TEXTURE), false, p_108830_.hasFoil());
 	              VertexConsumer vertexconsumer = material.sprite().wrap(ItemRenderer.getFoilBufferDirect(p_108833_, this.apprenticewand.renderType(material.atlasLocation()), true, p_108830_.hasFoil()));
-	              //material.sprite().wrap(ItemRenderer.getFoilBufferDirect(p_108833_, this.apprenticewand.renderType(material.atlasLocation()), true, p_108830_.hasFoil()));
 	              this.apprenticewand.bone().render(p_108832_, vertexconsumer, p_108834_, p_108835_, 1.0F, 1.0F, 1.0F, 1.0F);
 	              }
 	              p_108832_.popPose();

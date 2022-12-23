@@ -35,16 +35,13 @@ import com.minecraftserverzone.harrypotter.spells.incendio.IncendioModel;
 import com.minecraftserverzone.harrypotter.spells.melofors.MeloforsModel;
 import com.minecraftserverzone.harrypotter.spells.sectumsempra.SectumsempraModel;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
@@ -54,24 +51,10 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ModSetup {
 	
 	@SubscribeEvent
-	public static void registerCreativeModeTab(CreativeModeTabEvent.Register event) {
-        event.registerCreativeModeTab(new ResourceLocation(HarryPotterMod.MODID, "harrypotter"),
-                builder -> builder.icon(() -> new ItemStack(Registrations.APPRENTICE_WAND.get()))
-                .title(Component.translatable("itemGroup." + HarryPotterMod.MODID))
-                //.withLabelColor(0xDDBB00)
-                .displayItems((features, output, hasPermissions) -> {
-                	Registrations.ITEMS.getEntries().forEach((s)-> output.accept(new ItemStack(s.get())));
-               }));
+	public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
+		SpawnPlacements.register(Registrations.DEATH_EATER.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DeathEater::checkMobSpawnRules);
+		SpawnPlacements.register(Registrations.TROLL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Troll::checkMobSpawnRules);
 	}
-	
-	@SubscribeEvent
-	public static void registerSpawnPlacements(SpawnPlacementRegisterEvent event) {
-		event.register(Registrations.DEMENTOR.get(), SpawnPlacements.Type.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Dementor::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-		event.register(Registrations.DEATH_EATER.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, DeathEater::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-		event.register(Registrations.ACROMANTULA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Acromantula::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-		event.register(Registrations.INFERIUS.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Inferius::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-		event.register(Registrations.TROLL.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Troll::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.AND);
-    }
 
 	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -91,7 +74,6 @@ public class ModSetup {
 		event.registerLayerDefinition(PatronusDeerModel.LAYER_LOCATION, PatronusDeerModel::createBodyLayer);
 		event.registerLayerDefinition(DementorModel.LAYER_LOCATION, DementorModel::createBodyLayer);
 		event.registerLayerDefinition(DeathEaterModel.LAYER_LOCATION, DeathEaterModel::createBodyLayer);
-//		event.registerLayerDefinition(DeathEaterModel.LAYER_LOCATION, DeathEaterModel::createBodyLayer2);
 		event.registerLayerDefinition(ApprenticeWandModel.LAYER_LOCATION, ApprenticeWandModel::createBodyLayer);
 		event.registerLayerDefinition(TrollModel.LAYER_LOCATION, TrollModel::createBodyLayer);
 		event.registerLayerDefinition(InferiusModel.LAYER_LOCATION, InferiusModel::createBodyLayer);

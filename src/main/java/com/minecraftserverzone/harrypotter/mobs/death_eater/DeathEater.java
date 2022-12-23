@@ -15,13 +15,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -67,7 +63,7 @@ public class DeathEater extends Monster implements RangedAttackMob{
    }
    
 	@Override
-	public boolean shouldDropExperience() {
+	protected boolean shouldDropExperience() {
 		return true;
 	}
 
@@ -120,6 +116,13 @@ public class DeathEater extends Monster implements RangedAttackMob{
           --this.attackAnimationTick;
        }
    }
+
+   
+   @Override
+	protected void populateDefaultEquipmentSlots(DifficultyInstance p_21383_) {
+		super.populateDefaultEquipmentSlots(p_21383_);
+		
+	}
    
    @Override
    public void aiStep() {
@@ -167,21 +170,6 @@ public class DeathEater extends Monster implements RangedAttackMob{
 		return 1;
 	}
 
-   @Override
-	protected SoundEvent getAmbientSound() {
-	   return SoundEvents.PILLAGER_AMBIENT;
-   }
-   
-   @Override
-	protected SoundEvent getDeathSound() {
-	   return SoundEvents.PILLAGER_DEATH;
-	}
-   
-   @Override
-	protected SoundEvent getHurtSound(DamageSource p_33034_) {
-	   return  SoundEvents.PILLAGER_HURT;
-   }
-   
    public MobType getMobType() {
       return MobType.ILLAGER;
    }
@@ -248,7 +236,7 @@ public class DeathEater extends Monster implements RangedAttackMob{
    public static class TwohandEffectsGroupData implements SpawnGroupData {
       public MobEffect effect;
 
-      public void setRandomEffect(RandomSource p_33830_) {
+      public void setRandomEffect(Random p_33830_) {
          int i = p_33830_.nextInt(5);
          if (i <= 1) {
             this.effect = MobEffects.MOVEMENT_SPEED;

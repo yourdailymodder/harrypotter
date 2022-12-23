@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -88,6 +87,7 @@ public void tick() {
 //         ProjectileUtil.rotateTowardsMovement(this, 1.5F);
 //         this.setRot(this.getOwner().getYRot(), this.getOwner().getXRot());
          
+         float f = this.getInertia();
          if (this.isInWater()) {
             for(int i = 0; i < 4; ++i) {
                this.level.addParticle(ParticleTypes.BUBBLE, d0 - vec3.x * 0.25D, d1 - vec3.y * 0.25D, d2 - vec3.z * 0.25D, vec3.x, vec3.y, vec3.z);
@@ -179,11 +179,10 @@ public void tick() {
       return 1.0F;
    }
 
-   @Override
-   public Packet<ClientGamePacketListener> getAddEntityPacket() {
+   public Packet<?> getAddEntityPacket() {
       Entity entity = this.getOwner();
       int i = entity == null ? 0 : entity.getId();
-      return new ClientboundAddEntityPacket(this.getId(), this.getUUID(), this.getX(), this.getY(), this.getZ(), this.getXRot(), this.getYRot(), this.getType(), i, new Vec3(this.xPower, this.yPower, this.zPower), 0.0d);
+      return new ClientboundAddEntityPacket(this.getId(), this.getUUID(), this.getX(), this.getY(), this.getZ(), this.getXRot(), this.getYRot(), this.getType(), i, new Vec3(this.xPower, this.yPower, this.zPower));
    }
 
    public void recreateFromPacket(ClientboundAddEntityPacket p_150128_) {

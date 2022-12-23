@@ -1,7 +1,7 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0":"harrypotter:item/broomstick"
+		"layer0":"harrypotter:items/broomstick"
 	},
 	"display": {
         "ground": {

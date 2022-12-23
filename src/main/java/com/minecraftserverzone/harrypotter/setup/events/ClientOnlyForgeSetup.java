@@ -4,8 +4,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
 
-import org.joml.Vector3f;
-
 import com.google.common.collect.Maps;
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
 import com.minecraftserverzone.harrypotter.gui.MaraudersMap;
@@ -22,6 +20,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -35,11 +34,11 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,7 +47,8 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientOnlyForgeSetup {
 
 	public static int channelFireStorm = 0;
-	 
+	
+	
 	@SubscribeEvent
 	public static void changeCapabilityOfPlayers(PlayerTickEvent event) {
 		if(event.phase == Phase.END && event.player.level.isClientSide()) {
@@ -115,42 +115,47 @@ public class ClientOnlyForgeSetup {
 	
 	@SubscribeEvent
 	public static void onEntityDeath(LivingDeathEvent event) {
-		if(event.getEntity() instanceof Villager || event.getEntity() instanceof IronGolem || event.getEntity() instanceof Dementor) {
+		if(event.getEntityLiving() instanceof Villager || event.getEntityLiving() instanceof IronGolem || event.getEntityLiving() instanceof Dementor) {
 			if(Math.random() < HarryPotterModConfig.DEMENTOR_SPAWN_PERCENT.get()) {
 				Networking.sendToServer(new PacketSpells(92)); //spawn dementor
 			}
 		}
 	}
 	
+//	@SubscribeEvent
+//	public static void respawn(PlayerRespawnEvent event) {
+//		
+//	}
+	
 	@SubscribeEvent
-	public static void onServerJoin(PlayerLoggedInEvent event) {
-//		event.getEntity().getCapability(PlayerStatsProvider.PLAYER_STATS_CAPABILITY).ifPresent(h -> {
-//			h.setClickedSkill(0);
-//			h.setFlying(0);
-//			h.setUsingSkill(0);
-//			int[] allSpell = new int[] {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-//				if(h.getSpellsLevel() != null) {
-//					if(h.getSpellsLevel().length == 25) {
-//							allSpell = h.getSpellsLevel();
-//						}
-//				}
-////				System.out.println("x: "+allSpell.length);
-//			Networking.sendToServer(new PacketData(allSpell, event.getEntity().getUUID(), -1));
-//		});
-//		Networking.sendToServer(new PacketSpells(91));
+	public static void onServerJoin(LoggedInEvent event) {
+		event.getPlayer().getCapability(PlayerStatsProvider.PLAYER_STATS_CAPABILITY).ifPresent(h -> {
+			h.setClickedSkill(0);
+			h.setFlying(0);
+			h.setUsingSkill(0);
+			int[] allSpell = new int[] {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+				if(h.getSpellsLevel() != null) {
+					if(h.getSpellsLevel().length == 25) {
+							allSpell = h.getSpellsLevel();
+						}
+				}
+//				System.out.println("x: "+allSpell.length);
+			Networking.sendToServer(new PacketData(allSpell, event.getPlayer().getUUID(), -1));
+		});
+		Networking.sendToServer(new PacketSpells(91));
 		
 	}
 
 	@SubscribeEvent
     public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
-		if(event.getEntity().level.isClientSide && (event.getEntity().getMainHandItem().is(Registrations.MARAUDERS_MAP.get()) || event.getEntity().getOffhandItem().is(Registrations.MARAUDERS_MAP.get()))) {
+		if(event.getPlayer().level.isClientSide && (event.getPlayer().getMainHandItem().is(Registrations.MARAUDERS_MAP.get()) || event.getPlayer().getOffhandItem().is(Registrations.MARAUDERS_MAP.get()))) {
 		    Minecraft.getInstance().setScreen(new MaraudersMap());
 		}
 	}
 	
 	@SuppressWarnings("resource")
 	@SubscribeEvent
-    public static void detectScroll(InputEvent.MouseScrollingEvent event) {
+    public static void detectScroll(InputEvent.MouseScrollEvent event) {
 		Player player = Minecraft.getInstance().player;
 		
 		if (event.getScrollDelta() > 0) {
@@ -192,7 +197,7 @@ public class ClientOnlyForgeSetup {
 
 	@SuppressWarnings("resource")
 	@SubscribeEvent
-	public static void keyPressed(InputEvent.Key event) {
+	public static void keyPressed(InputEvent.KeyInputEvent event) {
 		Player player = Minecraft.getInstance().player;
 		Options keys = Minecraft.getInstance().options;
 

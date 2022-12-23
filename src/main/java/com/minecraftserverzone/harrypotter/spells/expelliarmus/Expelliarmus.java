@@ -1,9 +1,8 @@
 package com.minecraftserverzone.harrypotter.spells.expelliarmus;
 
-import org.joml.Vector3f;
-
 import com.minecraftserverzone.harrypotter.setup.Registrations;
 import com.minecraftserverzone.harrypotter.spells.DamageSpell;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
@@ -106,13 +105,13 @@ public class Expelliarmus extends DamageSpell {
 	}
 	
 	@Override
-	public float getLightLevelDependentMagicValue() {
+	public float getBrightness() {
 		return 1F;
 	}
 
 	@Override
 	protected ParticleOptions getTrailParticle() {
-		Vector3f PARTICLE_COLOR = Vec3.fromRGB24(0xb5120c).toVector3f();
+		Vector3f PARTICLE_COLOR = new Vector3f(Vec3.fromRGB24(0xb5120c));
 		return new DustParticleOptions(PARTICLE_COLOR, 1);
 	}
 

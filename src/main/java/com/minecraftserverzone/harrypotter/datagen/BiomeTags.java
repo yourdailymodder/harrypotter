@@ -1,21 +1,19 @@
 package com.minecraftserverzone.harrypotter.datagen;
 
-import java.util.concurrent.CompletableFuture;
-
 import com.minecraftserverzone.harrypotter.HarryPotterMod;
+import com.minecraftserverzone.harrypotter.setup.Registrations;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BiomeTags extends TagsProvider<Biome>{
 	
-	public BiomeTags(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper fileHelper) {
-		super(output, Registries.BIOME, registries, HarryPotterMod.MODID, fileHelper);
+	public BiomeTags(DataGenerator generator, ExistingFileHelper helper) {
+		super(generator, BuiltinRegistries.BIOME, HarryPotterMod.MODID, helper);
 	}
 
 	@Override
@@ -24,12 +22,10 @@ public class BiomeTags extends TagsProvider<Biome>{
 	}
 	
 	@Override
-    protected void addTags(Provider p_256380_) {
-        /*ForgeRegistries.BIOMES.getValues().forEach(biome -> {
-        	tag(ModTags.HAS_WITCH_TOWER).add(biome);
-        	tag(ModTags.HAS_LABYRINTH).add(biome);
-        	tag(ModTags.HAS_HIDDEN_BASEMENT).add(biome);
-        });*/
+    protected void addTags() {
+        ForgeRegistries.BIOMES.getValues().forEach(biome -> {
+        	tag(Registrations.HAS_WITCH_TOWER).add(biome);
+        });
     }
 	
 //	@Override
