@@ -1,3 +1,6 @@
+The codes in this mod very made a bit hastly and it was the first mod i made while using capabilities and packets so don't expect some high quality stuff.
+You can't use these codes to create an update for this mod and redistribute it with the same name as this mod on any sites.
+
 
 Source installation information for modders
 -------------------------------------------
