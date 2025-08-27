@@ -74,7 +74,6 @@ public class ForgeSetup {
 		
 	@SubscribeEvent
     public static void onPlayerDeath(PlayerEvent.Clone event) {
-		if(event.isWasDeath()) {
 			event.getOriginal().reviveCaps();
             event.getOriginal().getCapability(PlayerStatsProvider.PLAYER_STATS_CAPABILITY).ifPresent(og -> {
             	event.getEntity().getCapability(PlayerStatsProvider.PLAYER_STATS_CAPABILITY).ifPresent(h -> {
@@ -84,7 +83,6 @@ public class ForgeSetup {
                 });
             });
             event.getOriginal().invalidateCaps();
-		}
             
     }	
 }
